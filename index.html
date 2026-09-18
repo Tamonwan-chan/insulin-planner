@@ -1,0 +1,458 @@
+<title>แผนจ่ายอินซูลิน</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --paper:#eef3f1;
+    --surface:#ffffff;
+    --surface-2:#e5ece9;
+    --ink:#16262b;
+    --ink-soft:#52666c;
+    --line: rgba(22,38,43,0.14);
+    --line-strong: rgba(22,38,43,0.28);
+    --accent:#a86a24;
+    --accent-deep:#7a4c15;
+    --accent-tint: rgba(168,106,36,0.12);
+    --good:#356b59;
+    --good-tint: rgba(53,107,89,0.12);
+    --warn:#a4442e;
+    --warn-tint: rgba(164,68,46,0.12);
+    --shadow: 0 1px 2px rgba(22,38,43,0.06), 0 8px 24px -12px rgba(22,38,43,0.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0e1a1d;
+      --surface:#16272b;
+      --surface-2:#1d3033;
+      --ink:#e9f1ee;
+      --ink-soft:#9db3b3;
+      --line: rgba(233,241,238,0.14);
+      --line-strong: rgba(233,241,238,0.28);
+      --accent:#e0a857;
+      --accent-deep:#f0c583;
+      --accent-tint: rgba(224,168,87,0.14);
+      --good:#7fc2ac;
+      --good-tint: rgba(127,194,172,0.14);
+      --warn:#e08a70;
+      --warn-tint: rgba(224,138,112,0.14);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0e1a1d;
+    --surface:#16272b;
+    --surface-2:#1d3033;
+    --ink:#e9f1ee;
+    --ink-soft:#9db3b3;
+    --line: rgba(233,241,238,0.14);
+    --line-strong: rgba(233,241,238,0.28);
+    --accent:#e0a857;
+    --accent-deep:#f0c583;
+    --accent-tint: rgba(224,168,87,0.14);
+    --good:#7fc2ac;
+    --good-tint: rgba(127,194,172,0.14);
+    --warn:#e08a70;
+    --warn-tint: rgba(224,138,112,0.14);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Sarabun', 'Leelawadee UI', Tahoma, sans-serif;
+    padding-inline:20px;
+    padding-block:40px;
+  }
+  .wrap{max-width:900px;margin-inline:auto;display:flex;flex-direction:column;gap:28px;}
+
+  h1,h2,h3{font-family:'Bai Jamjuree', 'Sarabun', 'Leelawadee UI', sans-serif; text-wrap:balance; margin:0;}
+  .mono{font-family:'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums;}
+
+  header{display:flex;flex-direction:column;gap:8px;}
+  header .kicker{
+    font-family:'Bai Jamjuree', 'Sarabun', sans-serif; font-weight:600;
+    font-size:13px; letter-spacing:.02em;
+    color:var(--accent-deep);
+  }
+  header h1{font-size:clamp(28px,4vw,38px); font-weight:600; line-height:1.15;}
+  header p{margin:0; color:var(--ink-soft); max-width:62ch; font-size:15px; line-height:1.55;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:22px 24px;
+    box-shadow:var(--shadow);
+  }
+
+  .card h2{font-size:15px; font-weight:600; font-family:'Bai Jamjuree','Sarabun',sans-serif; letter-spacing:.02em; margin-bottom:2px;}
+  .card .sub{color:var(--ink-soft); font-size:13px; margin-bottom:16px;}
+
+  .dose-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+  }
+  @media (max-width:560px){ .dose-grid{grid-template-columns:repeat(2,1fr);} }
+
+  .field{display:flex; flex-direction:column; gap:6px;}
+  .field label{font-size:12.5px; color:var(--ink-soft); font-weight:500;}
+  .field .input-shell{
+    display:flex; align-items:center; gap:6px;
+    border:1px solid var(--line-strong);
+    border-radius:9px;
+    background:var(--paper);
+    padding:9px 10px;
+  }
+  .field .input-shell:focus-within{ border-color:var(--accent); outline:2px solid var(--accent-tint); }
+  .field input{
+    border:none; background:transparent; color:var(--ink);
+    font-family:'IBM Plex Mono',monospace; font-size:16px; width:100%;
+    font-variant-numeric:tabular-nums;
+  }
+  .field input:focus{outline:none;}
+  .field .unit{font-size:12px; color:var(--ink-soft); white-space:nowrap;}
+
+  .date-row{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px;}
+  @media (max-width:560px){ .date-row{grid-template-columns:1fr;} }
+  .date-row input[type="date"]{
+    border:none; background:transparent; color:var(--ink); font-family:'IBM Plex Mono',monospace;
+    font-size:15px; width:100%;
+  }
+  .date-row input[type="date"]:focus{outline:none;}
+  .date-row input::-webkit-calendar-picker-indicator{ filter: var(--picker-filter, none); cursor:pointer; opacity:.7; }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .date-row input::-webkit-calendar-picker-indicator{ filter:invert(1); } }
+  :root[data-theme="dark"] .date-row input::-webkit-calendar-picker-indicator{ filter:invert(1); }
+
+  .daily-total{
+    margin-top:14px; padding-top:14px; border-top:1px dashed var(--line);
+    display:flex; justify-content:space-between; align-items:baseline; font-size:13.5px; color:var(--ink-soft);
+  }
+  .daily-total b{color:var(--ink); font-family:'IBM Plex Mono',monospace; font-size:15px; font-weight:600;}
+
+  .error{color:var(--warn); font-size:13.5px; margin-top:10px; display:none;}
+
+  /* Result hero */
+  .hero{
+    display:grid;
+    grid-template-columns: auto 1fr;
+    gap:24px;
+    align-items:center;
+  }
+  @media (max-width:640px){ .hero{grid-template-columns:1fr;} }
+  .hero .count{
+    font-family:'IBM Plex Mono', monospace; font-weight:600;
+    font-size:clamp(56px,10vw,80px); line-height:1; color:var(--accent-deep);
+  }
+  .hero .count-label{font-size:13px; color:var(--ink-soft); margin-top:4px; letter-spacing:.02em;}
+  .hero .count-wrap{ text-align:center; }
+  .stat-row{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
+  @media (max-width:640px){ .stat-row{grid-template-columns:1fr 1fr;} }
+  .stat{
+    background:var(--surface-2); border-radius:10px; padding:12px 14px;
+    display:flex; flex-direction:column; gap:2px;
+  }
+  .stat .v{font-family:'IBM Plex Mono',monospace; font-size:19px; font-weight:600; font-variant-numeric:tabular-nums;}
+  .stat .l{font-size:12px; color:var(--ink-soft); letter-spacing:.01em;}
+  .stat.warn .v{color:var(--warn);}
+  .stat.good .v{color:var(--good);}
+
+  /* Timeline */
+  .timeline-wrap{margin-top:18px;}
+  .legend{display:flex; gap:18px; font-size:12.5px; color:var(--ink-soft); margin-bottom:10px; flex-wrap:wrap;}
+  .legend .dot{display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:6px; vertical-align:middle;}
+  svg.timeline{width:100%; height:auto; display:block; overflow:visible;}
+  .tl-label{font-family:'Sarabun',sans-serif; font-size:11.5px; fill:var(--ink-soft);}
+  .tl-vial-label{font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600; fill:var(--surface);}
+  .tl-waste-label{font-family:'Sarabun',sans-serif; font-size:10.5px; font-weight:600; fill:var(--warn);}
+
+  /* Table */
+  .table-scroll{overflow-x:auto; margin-top:6px; border:1px solid var(--line); border-radius:10px;}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; min-width:560px;}
+  thead th{
+    text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.05em;
+    color:var(--ink-soft); font-weight:600; padding:10px 12px; background:var(--surface-2);
+    position:sticky; top:0;
+  }
+  tbody td{padding:10px 12px; border-top:1px solid var(--line);}
+  tbody td.num{font-family:'IBM Plex Mono',monospace; font-variant-numeric:tabular-nums;}
+  .pill{
+    display:inline-flex; align-items:center; gap:5px; padding:2px 8px; border-radius:999px;
+    font-family:'Sarabun',sans-serif; font-size:12px; font-weight:600;
+  }
+  .pill.good{background:var(--good-tint); color:var(--good);}
+  .pill.warn{background:var(--warn-tint); color:var(--warn);}
+
+  footer{color:var(--ink-soft); font-size:12.5px; line-height:1.6; border-top:1px solid var(--line); padding-top:16px;}
+  footer strong{color:var(--ink);}
+</style>
+
+<div class="wrap" lang="th">
+  <header>
+    <span class="kicker">แผนจ่ายอินซูลิน</span>
+    <h1>ต้องจ่ายอินซูลินกี่ขวด?</h1>
+    <p>ระบุขนาดยาต่อมื้อของผู้ป่วยและวันนัดครั้งถัดไป ขวดอินซูลิน 1 ขวด (U-100 ขนาด 10&nbsp;มล.) บรรจุ 1,000 ยูนิต และต้องทิ้งภายใน 28 วันหลังเปิดใช้ แม้จะยังมียาเหลืออยู่ก็ตาม — โปรแกรมนี้คำนวณโดยพิจารณาทั้งสองเงื่อนไข</p>
+  </header>
+
+  <section class="card" aria-labelledby="dose-h">
+    <h2 id="dose-h">ขนาดยาต่อวัน</h2>
+    <div class="sub">ยูนิตต่อการฉีดแต่ละมื้อ</div>
+    <div class="dose-grid">
+      <div class="field">
+        <label for="breakfast">มื้อเช้า</label>
+        <div class="input-shell"><input id="breakfast" type="number" min="0" step="1" value="0" inputmode="numeric"><span class="unit">ยูนิต</span></div>
+      </div>
+      <div class="field">
+        <label for="lunch">มื้อกลางวัน</label>
+        <div class="input-shell"><input id="lunch" type="number" min="0" step="1" value="0" inputmode="numeric"><span class="unit">ยูนิต</span></div>
+      </div>
+      <div class="field">
+        <label for="dinner">มื้อเย็น</label>
+        <div class="input-shell"><input id="dinner" type="number" min="0" step="1" value="0" inputmode="numeric"><span class="unit">ยูนิต</span></div>
+      </div>
+      <div class="field">
+        <label for="bedtime">ก่อนนอน</label>
+        <div class="input-shell"><input id="bedtime" type="number" min="0" step="1" value="0" inputmode="numeric"><span class="unit">ยูนิต</span></div>
+      </div>
+    </div>
+
+    <div class="date-row">
+      <div class="field">
+        <label for="today-date">วันนี้</label>
+        <div class="input-shell"><input id="today-date" type="date"></div>
+      </div>
+      <div class="field">
+        <label for="appt-date">วันนัดครั้งถัดไป</label>
+        <div class="input-shell"><input id="appt-date" type="date"></div>
+      </div>
+    </div>
+
+    <div class="daily-total">
+      <span>รวมต่อวัน</span>
+      <b id="daily-total-v">0 ยูนิต/วัน</b>
+    </div>
+    <div class="error" id="date-error">วันนัดต้องอยู่หลังวันนี้</div>
+  </section>
+
+  <section class="card" aria-labelledby="result-h">
+    <h2 id="result-h">จำนวนขวดที่ต้องจ่าย</h2>
+    <div class="sub">ครอบคลุมทุกวันตั้งแต่วันนี้จนถึงวันนัด</div>
+    <div class="hero">
+      <div class="count-wrap">
+        <div class="count" id="vial-count">0</div>
+        <div class="count-label">ขวด</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><span class="v mono" id="stat-days">0</span><span class="l">วันที่ครอบคลุม</span></div>
+        <div class="stat"><span class="v mono" id="stat-units">0</span><span class="l">ยูนิตที่ต้องใช้</span></div>
+        <div class="stat warn"><span class="v mono" id="stat-waste">0</span><span class="l">ยูนิตที่ต้องทิ้ง</span></div>
+      </div>
+    </div>
+
+    <div class="timeline-wrap">
+      <div class="legend">
+        <span><span class="dot" style="background:var(--accent)"></span>ขวดที่ใช้งานอยู่</span>
+        <span><span class="dot" style="background:var(--warn)"></span>ทิ้งทั้งที่ยังมียาเหลือ (ครบกำหนด 28 วัน)</span>
+      </div>
+      <svg class="timeline" id="timeline" viewBox="0 0 1000 90" preserveAspectRatio="none" role="img" aria-label="เส้นเวลาการใช้ขวดอินซูลินตั้งแต่วันนี้ถึงวันนัด"></svg>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="table-h">
+    <h2 id="table-h">รายละเอียดแต่ละขวด</h2>
+    <div class="sub">วันที่เปิดใช้แต่ละขวดและเหตุผลที่หยุดใช้</div>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>ขวดที่</th><th>วันที่เปิดใช้</th><th>ใช้ได้ถึงวันที่</th><th>จำนวนวันที่ใช้</th><th>ยูนิตที่ใช้ไป</th><th>เหตุผลที่หยุดใช้</th></tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <strong>ข้อสมมติในการคำนวณ:</strong> 1 ขวด = 1,000 ยูนิต; ขวดที่เปิดใช้แล้วต้องทิ้งภายใน 28 วันหลังเปิด ไม่ว่าจะเหลือยาอยู่เท่าใด; จะเปิดขวดใหม่ในวันที่ขวดก่อนหน้าใช้หมดหรือถูกทิ้ง; ยูนิตที่เหลือในขวดสุดท้ายไม่นับเป็นยาที่ต้องทิ้ง เนื่องจากอาจยังอยู่ในอายุการใช้งานหลังวันนัด กรุณาตรวจสอบระยะเวลาการใช้งานหลังเปิดขวด (in-use stability) ของอินซูลินแต่ละชนิดจากฉลากยา เนื่องจากบางผลิตภัณฑ์กำหนดระยะเวลาสั้นกว่า 28 วัน
+  </footer>
+</div>
+
+<script>
+(function(){
+  const VIAL_UNITS = 1000;
+  const SHELF_LIFE_DAYS = 28;
+
+  const els = {
+    breakfast: document.getElementById('breakfast'),
+    lunch: document.getElementById('lunch'),
+    dinner: document.getElementById('dinner'),
+    bedtime: document.getElementById('bedtime'),
+    today: document.getElementById('today-date'),
+    appt: document.getElementById('appt-date'),
+    dailyTotal: document.getElementById('daily-total-v'),
+    error: document.getElementById('date-error'),
+    vialCount: document.getElementById('vial-count'),
+    statDays: document.getElementById('stat-days'),
+    statUnits: document.getElementById('stat-units'),
+    statWaste: document.getElementById('stat-waste'),
+    tableBody: document.getElementById('table-body'),
+    svg: document.getElementById('timeline'),
+  };
+
+  function todayUTC(){
+    const d = new Date();
+    return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
+  }
+  function parseDateInput(val){
+    if(!val) return NaN;
+    const [y,m,d] = val.split('-').map(Number);
+    return Date.UTC(y, m-1, d);
+  }
+  function toDateInputValue(ms){
+    const d = new Date(ms);
+    const y = d.getUTCFullYear(), m = String(d.getUTCMonth()+1).padStart(2,'0'), day = String(d.getUTCDate()).padStart(2,'0');
+    return `${y}-${m}-${day}`;
+  }
+  function fmtDate(ms){
+    return new Intl.DateTimeFormat('th-TH-u-ca-buddhist', {day:'numeric', month:'short', year:'numeric'}).format(new Date(ms));
+  }
+  function fmtInt(n){ return n.toLocaleString('th-TH'); }
+  function addDays(ms, n){ return ms + n*86400000; }
+
+  // seed defaults: today, and appointment 60 days out
+  els.today.value = toDateInputValue(todayUTC());
+  els.appt.value = toDateInputValue(addDays(todayUTC(), 60));
+
+  function computePlan(dailyUnits, daysTotal){
+    const maxDaysByVolume = Math.floor(VIAL_UNITS / dailyUnits);
+    const daysPerFullVial = Math.max(1, Math.min(SHELF_LIFE_DAYS, maxDaysByVolume));
+    const limitedByExpiry = daysPerFullVial === SHELF_LIFE_DAYS && maxDaysByVolume > SHELF_LIFE_DAYS;
+    const tieNoWaste = maxDaysByVolume === SHELF_LIFE_DAYS;
+
+    const vials = [];
+    let remaining = daysTotal;
+    let cursor = 0;
+    while(remaining > 0){
+      const daysUsed = Math.min(daysPerFullVial, remaining);
+      const isFullSpan = daysUsed === daysPerFullVial;
+      const unitsUsed = daysUsed * dailyUnits;
+      const wasted = (isFullSpan && limitedByExpiry && !tieNoWaste) ? (VIAL_UNITS - unitsUsed) : 0;
+      let reason;
+      if(!isFullSpan) reason = 'appointment reached';
+      else if(limitedByExpiry) reason = '28-day expiry';
+      else reason = 'units used up';
+      vials.push({ startDay: cursor, daysUsed, unitsUsed, wasted, reason });
+      cursor += daysUsed;
+      remaining -= daysUsed;
+    }
+    const totalWaste = vials.reduce((s,v)=>s+v.wasted, 0);
+    return { vials, totalWaste, limitedByExpiry, daysPerFullVial };
+  }
+
+  function render(){
+    const b = Math.max(0, Number(els.breakfast.value) || 0);
+    const l = Math.max(0, Number(els.lunch.value) || 0);
+    const d = Math.max(0, Number(els.dinner.value) || 0);
+    const bt = Math.max(0, Number(els.bedtime.value) || 0);
+    const dailyUnits = b+l+d+bt;
+    els.dailyTotal.textContent = `${fmtInt(dailyUnits)} ยูนิต/วัน`;
+
+    const t0 = parseDateInput(els.today.value);
+    const t1 = parseDateInput(els.appt.value);
+    const daysTotal = Math.round((t1 - t0) / 86400000) + 1; // inclusive of today
+
+    if(!Number.isFinite(t0) || !Number.isFinite(t1) || t1 < t0){
+      els.error.style.display = 'block';
+      els.vialCount.textContent = '—';
+      els.statDays.textContent = '—';
+      els.statUnits.textContent = '—';
+      els.statWaste.textContent = '—';
+      els.tableBody.innerHTML = '';
+      els.svg.innerHTML = '';
+      return;
+    }
+    els.error.style.display = 'none';
+
+    if(dailyUnits === 0){
+      els.vialCount.textContent = '0';
+      els.statDays.textContent = fmtInt(daysTotal);
+      els.statUnits.textContent = '0';
+      els.statWaste.textContent = '0';
+      els.tableBody.innerHTML = `<tr><td colspan="6" style="color:var(--ink-soft);">ไม่ได้สั่งอินซูลิน — ไม่ต้องจ่ายยา</td></tr>`;
+      els.svg.innerHTML = '';
+      return;
+    }
+
+    const plan = computePlan(dailyUnits, daysTotal);
+
+    els.vialCount.textContent = fmtInt(plan.vials.length);
+    els.statDays.textContent = fmtInt(daysTotal);
+    els.statUnits.textContent = fmtInt(dailyUnits * daysTotal);
+    els.statWaste.textContent = fmtInt(plan.totalWaste);
+    els.statWaste.parentElement.classList.toggle('warn', plan.totalWaste > 0);
+    els.statWaste.parentElement.classList.toggle('good', plan.totalWaste === 0);
+
+    // table
+    els.tableBody.innerHTML = plan.vials.map((v, i) => {
+      const openMs = addDays(t0, v.startDay);
+      const endMs = addDays(t0, v.startDay + v.daysUsed - 1);
+      const pill = v.wasted > 0
+        ? `<span class="pill warn">ครบกำหนด 28 วัน · เหลือ ${fmtInt(v.wasted)} ยูนิต</span>`
+        : (v.reason === 'appointment reached'
+            ? `<span class="pill good">ใช้ได้ถึงวันนัด</span>`
+            : `<span class="pill good">ใช้ยาหมดขวดพอดี</span>`);
+      return `<tr>
+        <td>ขวดที่ ${i+1}</td>
+        <td>${fmtDate(openMs)}</td>
+        <td>${fmtDate(endMs)}</td>
+        <td class="num">${fmtInt(v.daysUsed)}</td>
+        <td class="num">${fmtInt(v.unitsUsed)}</td>
+        <td>${pill}</td>
+      </tr>`;
+    }).join('');
+
+    drawTimeline(plan, daysTotal);
+  }
+
+  function drawTimeline(plan, daysTotal){
+    const W = 1000, H = 90, padX = 6, trackY = 30, trackH = 26;
+    const usable = W - padX*2;
+    const cs = getComputedStyle(document.documentElement);
+    const accent = cs.getPropertyValue('--accent').trim() || '#a86a24';
+    const warn = cs.getPropertyValue('--warn').trim() || '#a4442e';
+    const surface = cs.getPropertyValue('--surface').trim() || '#fff';
+    const inkSoft = cs.getPropertyValue('--ink-soft').trim() || '#52666c';
+    const line = cs.getPropertyValue('--line-strong').trim() || 'rgba(0,0,0,.2)';
+
+    let svgParts = [];
+    plan.vials.forEach((v, i) => {
+      const x = padX + (v.startDay/daysTotal)*usable;
+      const w = Math.max(2, (v.daysUsed/daysTotal)*usable);
+      const fill = v.wasted > 0 ? warn : accent;
+      const rx = 5;
+      svgParts.push(`<rect x="${x.toFixed(2)}" y="${trackY}" width="${w.toFixed(2)}" height="${trackH}" rx="${rx}" fill="${fill}" opacity="${i%2===0?1:0.82}"/>`);
+      if(x > padX){
+        svgParts.push(`<line x1="${x.toFixed(2)}" y1="${trackY-4}" x2="${x.toFixed(2)}" y2="${trackY+trackH+4}" stroke="${surface}" stroke-width="2"/>`);
+      }
+      if(w > 34){
+        svgParts.push(`<text class="tl-vial-label" x="${(x+w/2).toFixed(2)}" y="${trackY+trackH/2+4}" text-anchor="middle">${i+1}</text>`);
+      }
+      if(v.wasted > 0 && w > 40){
+        svgParts.push(`<text class="tl-waste-label" x="${(x+w/2).toFixed(2)}" y="${trackY+trackH+16}" text-anchor="middle">−${fmtInt(v.wasted)} ยูนิต</text>`);
+      }
+    });
+
+    svgParts.push(`<rect x="${padX}" y="${trackY}" width="${usable}" height="${trackH}" rx="5" fill="none" stroke="${line}" stroke-width="1.5"/>`);
+    svgParts.push(`<text class="tl-label" x="${padX}" y="${trackY-10}">วันนี้</text>`);
+    svgParts.push(`<text class="tl-label" x="${W-padX}" y="${trackY-10}" text-anchor="end">วันนัด</text>`);
+
+    els.svg.innerHTML = svgParts.join('');
+  }
+
+  [els.breakfast, els.lunch, els.dinner, els.bedtime, els.today, els.appt].forEach(el => {
+    el.addEventListener('input', render);
+  });
+
+  render();
+})();
+</script>
