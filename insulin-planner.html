@@ -1,6 +1,6 @@
-<title>Insulin Supply Planner</title>
+<title>แผนจ่ายอินซูลิน</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
   :root{
     --paper:#eef3f1;
@@ -60,19 +60,19 @@
   body{
     background:var(--paper);
     color:var(--ink);
-    font-family:'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+    font-family:'Sarabun', 'Leelawadee UI', Tahoma, sans-serif;
     padding-inline:20px;
     padding-block:40px;
   }
   .wrap{max-width:900px;margin-inline:auto;display:flex;flex-direction:column;gap:28px;}
 
-  h1,h2,h3{font-family:'Zilla Slab', Georgia, serif; text-wrap:balance; margin:0;}
+  h1,h2,h3{font-family:'Bai Jamjuree', 'Sarabun', 'Leelawadee UI', sans-serif; text-wrap:balance; margin:0;}
   .mono{font-family:'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums;}
 
   header{display:flex;flex-direction:column;gap:8px;}
   header .kicker{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12.5px; letter-spacing:.08em; text-transform:uppercase;
+    font-family:'Bai Jamjuree', 'Sarabun', sans-serif; font-weight:600;
+    font-size:13px; letter-spacing:.02em;
     color:var(--accent-deep);
   }
   header h1{font-size:clamp(28px,4vw,38px); font-weight:600; line-height:1.15;}
@@ -86,7 +86,7 @@
     box-shadow:var(--shadow);
   }
 
-  .card h2{font-size:15px; font-weight:600; font-family:'IBM Plex Sans',sans-serif; letter-spacing:.02em; margin-bottom:2px;}
+  .card h2{font-size:15px; font-weight:600; font-family:'Bai Jamjuree','Sarabun',sans-serif; letter-spacing:.02em; margin-bottom:2px;}
   .card .sub{color:var(--ink-soft); font-size:13px; margin-bottom:16px;}
 
   .dose-grid{
@@ -142,10 +142,10 @@
   }
   @media (max-width:640px){ .hero{grid-template-columns:1fr;} }
   .hero .count{
-    font-family:'Zilla Slab', serif; font-weight:700;
+    font-family:'IBM Plex Mono', monospace; font-weight:600;
     font-size:clamp(56px,10vw,80px); line-height:1; color:var(--accent-deep);
   }
-  .hero .count-label{font-size:13px; color:var(--ink-soft); margin-top:4px; text-transform:uppercase; letter-spacing:.06em;}
+  .hero .count-label{font-size:13px; color:var(--ink-soft); margin-top:4px; letter-spacing:.02em;}
   .hero .count-wrap{ text-align:center; }
   .stat-row{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
   @media (max-width:640px){ .stat-row{grid-template-columns:1fr 1fr;} }
@@ -154,7 +154,7 @@
     display:flex; flex-direction:column; gap:2px;
   }
   .stat .v{font-family:'IBM Plex Mono',monospace; font-size:19px; font-weight:600; font-variant-numeric:tabular-nums;}
-  .stat .l{font-size:11.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.04em;}
+  .stat .l{font-size:12px; color:var(--ink-soft); letter-spacing:.01em;}
   .stat.warn .v{color:var(--warn);}
   .stat.good .v{color:var(--good);}
 
@@ -163,9 +163,9 @@
   .legend{display:flex; gap:18px; font-size:12.5px; color:var(--ink-soft); margin-bottom:10px; flex-wrap:wrap;}
   .legend .dot{display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:6px; vertical-align:middle;}
   svg.timeline{width:100%; height:auto; display:block; overflow:visible;}
-  .tl-label{font-family:'IBM Plex Mono',monospace; font-size:11px; fill:var(--ink-soft);}
-  .tl-vial-label{font-family:'IBM Plex Sans',sans-serif; font-size:11.5px; font-weight:600; fill:var(--surface);}
-  .tl-waste-label{font-family:'IBM Plex Mono',monospace; font-size:10px; fill:var(--warn);}
+  .tl-label{font-family:'Sarabun',sans-serif; font-size:11.5px; fill:var(--ink-soft);}
+  .tl-vial-label{font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600; fill:var(--surface);}
+  .tl-waste-label{font-family:'Sarabun',sans-serif; font-size:10.5px; font-weight:600; fill:var(--warn);}
 
   /* Table */
   .table-scroll{overflow-x:auto; margin-top:6px; border:1px solid var(--line); border-radius:10px;}
@@ -175,11 +175,11 @@
     color:var(--ink-soft); font-weight:600; padding:10px 12px; background:var(--surface-2);
     position:sticky; top:0;
   }
-  tbody td{padding:10px 12px; border-top:1px solid var(--line); font-family:'IBM Plex Mono',monospace; font-variant-numeric:tabular-nums;}
-  tbody td:first-child, thead th:first-child{font-family:'IBM Plex Sans',sans-serif;}
+  tbody td{padding:10px 12px; border-top:1px solid var(--line);}
+  tbody td.num{font-family:'IBM Plex Mono',monospace; font-variant-numeric:tabular-nums;}
   .pill{
     display:inline-flex; align-items:center; gap:5px; padding:2px 8px; border-radius:999px;
-    font-family:'IBM Plex Sans',sans-serif; font-size:11.5px; font-weight:600;
+    font-family:'Sarabun',sans-serif; font-size:12px; font-weight:600;
   }
   .pill.good{background:var(--good-tint); color:var(--good);}
   .pill.warn{background:var(--warn-tint); color:var(--warn);}
@@ -188,84 +188,84 @@
   footer strong{color:var(--ink);}
 </style>
 
-<div class="wrap">
+<div class="wrap" lang="th">
   <header>
-    <span class="kicker">Insulin Supply Planner</span>
-    <h1>How many vials to dispense?</h1>
-    <p>Enter the patient's per-dose units and the date of their next appointment. Each vial holds 1,000 units (U-100, 10&nbsp;mL) and must be discarded 28 days after opening, even if units remain — the planner accounts for both limits.</p>
+    <span class="kicker">แผนจ่ายอินซูลิน</span>
+    <h1>ต้องจ่ายอินซูลินกี่ขวด?</h1>
+    <p>ระบุขนาดยาต่อมื้อของผู้ป่วยและวันนัดครั้งถัดไป ขวดอินซูลิน 1 ขวด (U-100 ขนาด 10&nbsp;มล.) บรรจุ 1,000 ยูนิต และต้องทิ้งภายใน 28 วันหลังเปิดใช้ แม้จะยังมียาเหลืออยู่ก็ตาม — โปรแกรมนี้คำนวณโดยพิจารณาทั้งสองเงื่อนไข</p>
   </header>
 
   <section class="card" aria-labelledby="dose-h">
-    <h2 id="dose-h">Daily dose</h2>
-    <div class="sub">Units per injection, by time of day</div>
+    <h2 id="dose-h">ขนาดยาต่อวัน</h2>
+    <div class="sub">ยูนิตต่อการฉีดแต่ละมื้อ</div>
     <div class="dose-grid">
       <div class="field">
-        <label for="breakfast">Breakfast</label>
-        <div class="input-shell"><input id="breakfast" type="number" min="0" step="1" value="0" inputmode="numeric"><span class="unit">units</span></div>
+        <label for="breakfast">มื้อเช้า</label>
+        <div class="input-shell"><input id="breakfast" type="number" min="0" step="1" value="0" inputmode="numeric"><span class="unit">ยูนิต</span></div>
       </div>
       <div class="field">
-        <label for="lunch">Lunch</label>
-        <div class="input-shell"><input id="lunch" type="number" min="0" step="1" value="0" inputmode="numeric"><span class="unit">units</span></div>
+        <label for="lunch">มื้อกลางวัน</label>
+        <div class="input-shell"><input id="lunch" type="number" min="0" step="1" value="0" inputmode="numeric"><span class="unit">ยูนิต</span></div>
       </div>
       <div class="field">
-        <label for="dinner">Dinner</label>
-        <div class="input-shell"><input id="dinner" type="number" min="0" step="1" value="0" inputmode="numeric"><span class="unit">units</span></div>
+        <label for="dinner">มื้อเย็น</label>
+        <div class="input-shell"><input id="dinner" type="number" min="0" step="1" value="0" inputmode="numeric"><span class="unit">ยูนิต</span></div>
       </div>
       <div class="field">
-        <label for="bedtime">Bedtime</label>
-        <div class="input-shell"><input id="bedtime" type="number" min="0" step="1" value="0" inputmode="numeric"><span class="unit">units</span></div>
+        <label for="bedtime">ก่อนนอน</label>
+        <div class="input-shell"><input id="bedtime" type="number" min="0" step="1" value="0" inputmode="numeric"><span class="unit">ยูนิต</span></div>
       </div>
     </div>
 
     <div class="date-row">
       <div class="field">
-        <label for="today-date">Today</label>
+        <label for="today-date">วันนี้</label>
         <div class="input-shell"><input id="today-date" type="date"></div>
       </div>
       <div class="field">
-        <label for="appt-date">Next appointment</label>
+        <label for="appt-date">วันนัดครั้งถัดไป</label>
         <div class="input-shell"><input id="appt-date" type="date"></div>
       </div>
     </div>
 
     <div class="daily-total">
-      <span>Daily total</span>
-      <b id="daily-total-v">46 units / day</b>
+      <span>รวมต่อวัน</span>
+      <b id="daily-total-v">0 ยูนิต/วัน</b>
     </div>
-    <div class="error" id="date-error">Appointment date must be after today's date.</div>
+    <div class="error" id="date-error">วันนัดต้องอยู่หลังวันนี้</div>
   </section>
 
   <section class="card" aria-labelledby="result-h">
-    <h2 id="result-h">Vials to dispense</h2>
-    <div class="sub">Covers every day from today through the appointment</div>
+    <h2 id="result-h">จำนวนขวดที่ต้องจ่าย</h2>
+    <div class="sub">ครอบคลุมทุกวันตั้งแต่วันนี้จนถึงวันนัด</div>
     <div class="hero">
       <div class="count-wrap">
-        <div class="count mono" id="vial-count">3</div>
-        <div class="count-label">vials</div>
+        <div class="count" id="vial-count">0</div>
+        <div class="count-label">ขวด</div>
       </div>
       <div class="stat-row">
-        <div class="stat"><span class="v mono" id="stat-days">60</span><span class="l">days covered</span></div>
-        <div class="stat"><span class="v mono" id="stat-units">2,760</span><span class="l">units needed</span></div>
-        <div class="stat warn"><span class="v mono" id="stat-waste">0</span><span class="l">units wasted</span></div>
+        <div class="stat"><span class="v mono" id="stat-days">0</span><span class="l">วันที่ครอบคลุม</span></div>
+        <div class="stat"><span class="v mono" id="stat-units">0</span><span class="l">ยูนิตที่ต้องใช้</span></div>
+        <div class="stat warn"><span class="v mono" id="stat-waste">0</span><span class="l">ยูนิตที่ต้องทิ้ง</span></div>
       </div>
     </div>
 
     <div class="timeline-wrap">
       <div class="legend">
-        <span><span class="dot" style="background:var(--accent)"></span>vial in use</span>
-        <span><span class="dot" style="background:var(--warn)"></span>discarded with units left (28-day expiry)</span>
+        <span><span class="dot" style="background:var(--accent)"></span>ขวดที่ใช้งานอยู่</span>
+        <span><span class="dot" style="background:var(--warn)"></span>ทิ้งทั้งที่ยังมียาเหลือ (ครบกำหนด 28 วัน)</span>
       </div>
-      <svg class="timeline" id="timeline" viewBox="0 0 1000 90" preserveAspectRatio="none" role="img" aria-label="Timeline of vials from today to appointment"></svg>
+      <svg class="timeline" id="timeline" viewBox="0 0 1000 90" preserveAspectRatio="none" role="img" aria-label="เส้นเวลาการใช้ขวดอินซูลินตั้งแต่วันนี้ถึงวันนัด"></svg>
     </div>
   </section>
 
   <section class="card" aria-labelledby="table-h">
-    <h2 id="table-h">Vial-by-vial breakdown</h2>
-    <div class="sub">When to open each vial and why it's retired</div>
+    <h2 id="table-h">รายละเอียดแต่ละขวด</h2>
+    <div class="sub">วันที่เปิดใช้แต่ละขวดและเหตุผลที่หยุดใช้</div>
     <div class="table-scroll">
       <table>
         <thead>
-          <tr><th>Vial</th><th>Opened</th><th>In use until</th><th>Days used</th><th>Units used</th><th>Retired because</th></tr>
+          <tr><th>ขวดที่</th><th>วันที่เปิดใช้</th><th>ใช้ได้ถึงวันที่</th><th>จำนวนวันที่ใช้</th><th>ยูนิตที่ใช้ไป</th><th>เหตุผลที่หยุดใช้</th></tr>
         </thead>
         <tbody id="table-body"></tbody>
       </table>
@@ -273,7 +273,7 @@
   </section>
 
   <footer>
-    <strong>Assumptions:</strong> one vial = 1,000 units; an opened vial is discarded 28 days after opening regardless of units remaining; a new vial is opened the day the previous one is exhausted or discarded; the last vial's remaining units aren't counted as waste since it may still be within date after the appointment. Confirm the 28-day in-use limit against the specific insulin's labeling — some products specify a shorter window.
+    <strong>ข้อสมมติในการคำนวณ:</strong> 1 ขวด = 1,000 ยูนิต; ขวดที่เปิดใช้แล้วต้องทิ้งภายใน 28 วันหลังเปิด ไม่ว่าจะเหลือยาอยู่เท่าใด; จะเปิดขวดใหม่ในวันที่ขวดก่อนหน้าใช้หมดหรือถูกทิ้ง; ยูนิตที่เหลือในขวดสุดท้ายไม่นับเป็นยาที่ต้องทิ้ง เนื่องจากอาจยังอยู่ในอายุการใช้งานหลังวันนัด กรุณาตรวจสอบระยะเวลาการใช้งานหลังเปิดขวด (in-use stability) ของอินซูลินแต่ละชนิดจากฉลากยา เนื่องจากบางผลิตภัณฑ์กำหนดระยะเวลาสั้นกว่า 28 วัน
   </footer>
 </div>
 
@@ -314,9 +314,9 @@
     return `${y}-${m}-${day}`;
   }
   function fmtDate(ms){
-    return new Intl.DateTimeFormat('en-US', {month:'short', day:'numeric', year:'numeric'}).format(new Date(ms));
+    return new Intl.DateTimeFormat('th-TH-u-ca-buddhist', {day:'numeric', month:'short', year:'numeric'}).format(new Date(ms));
   }
-  function fmtInt(n){ return n.toLocaleString('en-US'); }
+  function fmtInt(n){ return n.toLocaleString('th-TH'); }
   function addDays(ms, n){ return ms + n*86400000; }
 
   // seed defaults: today, and appointment 60 days out
@@ -355,7 +355,7 @@
     const d = Math.max(0, Number(els.dinner.value) || 0);
     const bt = Math.max(0, Number(els.bedtime.value) || 0);
     const dailyUnits = b+l+d+bt;
-    els.dailyTotal.textContent = `${fmtInt(dailyUnits)} units / day`;
+    els.dailyTotal.textContent = `${fmtInt(dailyUnits)} ยูนิต/วัน`;
 
     const t0 = parseDateInput(els.today.value);
     const t1 = parseDateInput(els.appt.value);
@@ -378,7 +378,7 @@
       els.statDays.textContent = fmtInt(daysTotal);
       els.statUnits.textContent = '0';
       els.statWaste.textContent = '0';
-      els.tableBody.innerHTML = `<tr><td colspan="6" style="font-family:'IBM Plex Sans',sans-serif; color:var(--ink-soft);">No insulin ordered — nothing to dispense.</td></tr>`;
+      els.tableBody.innerHTML = `<tr><td colspan="6" style="color:var(--ink-soft);">ไม่ได้สั่งอินซูลิน — ไม่ต้องจ่ายยา</td></tr>`;
       els.svg.innerHTML = '';
       return;
     }
@@ -397,16 +397,16 @@
       const openMs = addDays(t0, v.startDay);
       const endMs = addDays(t0, v.startDay + v.daysUsed - 1);
       const pill = v.wasted > 0
-        ? `<span class="pill warn">28-day expiry · ${fmtInt(v.wasted)}u left</span>`
+        ? `<span class="pill warn">ครบกำหนด 28 วัน · เหลือ ${fmtInt(v.wasted)} ยูนิต</span>`
         : (v.reason === 'appointment reached'
-            ? `<span class="pill good">covers to appointment</span>`
-            : `<span class="pill good">fully used</span>`);
+            ? `<span class="pill good">ใช้ได้ถึงวันนัด</span>`
+            : `<span class="pill good">ใช้ยาหมดขวดพอดี</span>`);
       return `<tr>
-        <td>Vial ${i+1}</td>
+        <td>ขวดที่ ${i+1}</td>
         <td>${fmtDate(openMs)}</td>
         <td>${fmtDate(endMs)}</td>
-        <td>${fmtInt(v.daysUsed)}</td>
-        <td>${fmtInt(v.unitsUsed)}</td>
+        <td class="num">${fmtInt(v.daysUsed)}</td>
+        <td class="num">${fmtInt(v.unitsUsed)}</td>
         <td>${pill}</td>
       </tr>`;
     }).join('');
@@ -437,14 +437,14 @@
       if(w > 34){
         svgParts.push(`<text class="tl-vial-label" x="${(x+w/2).toFixed(2)}" y="${trackY+trackH/2+4}" text-anchor="middle">${i+1}</text>`);
       }
-      if(v.wasted > 0 && w > 20){
-        svgParts.push(`<text class="tl-waste-label" x="${(x+w/2).toFixed(2)}" y="${trackY+trackH+16}" text-anchor="middle">−${fmtInt(v.wasted)}u</text>`);
+      if(v.wasted > 0 && w > 40){
+        svgParts.push(`<text class="tl-waste-label" x="${(x+w/2).toFixed(2)}" y="${trackY+trackH+16}" text-anchor="middle">−${fmtInt(v.wasted)} ยูนิต</text>`);
       }
     });
 
     svgParts.push(`<rect x="${padX}" y="${trackY}" width="${usable}" height="${trackH}" rx="5" fill="none" stroke="${line}" stroke-width="1.5"/>`);
-    svgParts.push(`<text class="tl-label" x="${padX}" y="${trackY-10}">today</text>`);
-    svgParts.push(`<text class="tl-label" x="${W-padX}" y="${trackY-10}" text-anchor="end">appointment</text>`);
+    svgParts.push(`<text class="tl-label" x="${padX}" y="${trackY-10}">วันนี้</text>`);
+    svgParts.push(`<text class="tl-label" x="${W-padX}" y="${trackY-10}" text-anchor="end">วันนัด</text>`);
 
     els.svg.innerHTML = svgParts.join('');
   }

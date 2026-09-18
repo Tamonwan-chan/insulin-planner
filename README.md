@@ -1,14 +1,16 @@
-# Insulin Supply Planner
+# แผนจ่ายอินซูลิน (Insulin Supply Planner)
 
 Repo: https://github.com/Tamonwan-chan/insulin-planner
 
-A simple calculator for figuring out how many insulin vials to dispense to a patient between today and their next appointment.
+เครื่องมือคำนวณจำนวนขวดอินซูลินที่ต้องจ่ายให้ผู้ป่วย ตั้งแต่วันนี้จนถึงวันนัดครั้งถัดไป สำหรับใช้งานโดยเภสัชกร
 
-Enter the per-dose units for breakfast, lunch, dinner, and bedtime, plus today's date and the appointment date. The calculator accounts for two limits on each vial:
+ระบุขนาดยาต่อมื้อ (มื้อเช้า มื้อกลางวัน มื้อเย็น ก่อนนอน) เป็นยูนิต พร้อมวันที่ปัจจุบันและวันนัดครั้งถัดไป โปรแกรมจะคำนวณโดยพิจารณาข้อจำกัด 2 ประการของขวดอินซูลินแต่ละขวด:
 
-- **Volume**: one vial holds 1,000 units.
-- **Shelf life**: an opened vial must be discarded 28 days after opening, even if units remain.
+- **ปริมาตร**: ขวดอินซูลิน 1 ขวด (U-100 ขนาด 10 มล.) บรรจุ 1,000 ยูนิต
+- **อายุการใช้งานหลังเปิดขวด**: ต้องทิ้งขวดที่เปิดใช้แล้วภายใน 28 วัน แม้จะยังมียาเหลืออยู่ก็ตาม
 
-It reports the total number of vials needed, days covered, total units required, any units wasted to expiry, a visual timeline, and a day-by-day breakdown of when each vial is opened and why it's retired.
+ผลลัพธ์ที่แสดง ได้แก่ จำนวนขวดที่ต้องจ่ายทั้งหมด จำนวนวันที่ครอบคลุม ยูนิตที่ต้องใช้ทั้งหมด ยูนิตที่ต้องทิ้งจากการครบกำหนด 28 วัน เส้นเวลาแสดงช่วงการใช้แต่ละขวด และตารางรายละเอียดว่าควรเปิดขวดใหม่วันไหนและเพราะเหตุใดจึงหยุดใช้ขวดเดิม
 
-Open [insulin-planner.html](insulin-planner.html) in a browser to use it.
+เปิดไฟล์ [insulin-planner.html](insulin-planner.html) ด้วยเบราว์เซอร์เพื่อใช้งาน
+
+**ข้อควรระวัง:** ระยะเวลาการใช้งานหลังเปิดขวด 28 วัน เป็นค่าทั่วไป ควรตรวจสอบฉลากยาของอินซูลินแต่ละชนิดอีกครั้ง เนื่องจากบางผลิตภัณฑ์อาจกำหนดระยะเวลาสั้นกว่านี้
