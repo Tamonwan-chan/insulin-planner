@@ -1,6 +1,6 @@
 # แผนจ่ายอินซูลิน (Insulin Supply Planner)
 
-Repo: https://github.com/Tamonwan-chan/insulin-planner
+Repo: https://tamonwan-chan.github.io/insulin-planner/
 
 เครื่องมือคำนวณจำนวนขวดอินซูลินที่ต้องจ่ายให้ผู้ป่วย ตั้งแต่วันนี้จนถึงวันนัดครั้งถัดไป สำหรับใช้งานโดยเภสัชกร
 
