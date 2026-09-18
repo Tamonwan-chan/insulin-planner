@@ -324,29 +324,52 @@
   els.appt.value = toDateInputValue(addDays(todayUTC(), 60));
 
   function computePlan(dailyUnits, daysTotal){
-    const maxDaysByVolume = Math.floor(VIAL_UNITS / dailyUnits);
-    const daysPerFullVial = Math.max(1, Math.min(SHELF_LIFE_DAYS, maxDaysByVolume));
-    const limitedByExpiry = daysPerFullVial === SHELF_LIFE_DAYS && maxDaysByVolume > SHELF_LIFE_DAYS;
-    const tieNoWaste = maxDaysByVolume === SHELF_LIFE_DAYS;
-
-    const vials = [];
-    let remaining = daysTotal;
-    let cursor = 0;
-    while(remaining > 0){
-      const daysUsed = Math.min(daysPerFullVial, remaining);
-      const isFullSpan = daysUsed === daysPerFullVial;
-      const unitsUsed = daysUsed * dailyUnits;
-      const wasted = (isFullSpan && limitedByExpiry && !tieNoWaste) ? (VIAL_UNITS - unitsUsed) : 0;
-      let reason;
-      if(!isFullSpan) reason = 'appointment reached';
-      else if(limitedByExpiry) reason = '28-day expiry';
-      else reason = 'units used up';
-      vials.push({ startDay: cursor, daysUsed, unitsUsed, wasted, reason });
-      cursor += daysUsed;
-      remaining -= daysUsed;
+    // Simulate day by day, unit by unit: a vial keeps being drawn from until
+    // it either runs dry (volume) or turns 28 days old (expiry). When a vial
+    // runs out mid-day, the rest of that day's dose is drawn from a newly
+    // opened vial straight away — vials are never discarded with a partial
+    // day's worth of unused capacity still on the clock.
+    const raw = [];
+    let cur = null;
+    for(let day = 0; day < daysTotal; day++){
+      let need = dailyUnits;
+      while(need > 0){
+        if(cur === null){
+          cur = { openDay: day, closeDay: day, unitsUsed: 0 };
+          raw.push(cur);
+        }
+        if(day - cur.openDay >= SHELF_LIFE_DAYS){
+          cur.wasted = VIAL_UNITS - cur.unitsUsed;
+          cur.reason = 'expiry';
+          cur = null;
+          continue;
+        }
+        const capacity = VIAL_UNITS - cur.unitsUsed;
+        const take = Math.min(need, capacity);
+        cur.unitsUsed += take;
+        need -= take;
+        cur.closeDay = day;
+        if(cur.unitsUsed >= VIAL_UNITS){
+          cur.wasted = 0;
+          cur.reason = 'volume';
+          cur = null;
+        }
+      }
     }
+    if(cur){
+      cur.wasted = 0;
+      cur.reason = 'appointment';
+    }
+
+    const vials = raw.map(v => ({
+      startDay: v.openDay,
+      daysUsed: v.closeDay - v.openDay + 1,
+      unitsUsed: v.unitsUsed,
+      wasted: v.wasted || 0,
+      reason: v.reason,
+    }));
     const totalWaste = vials.reduce((s,v)=>s+v.wasted, 0);
-    return { vials, totalWaste, limitedByExpiry, daysPerFullVial };
+    return { vials, totalWaste };
   }
 
   function render(){
@@ -398,7 +421,7 @@
       const endMs = addDays(t0, v.startDay + v.daysUsed - 1);
       const pill = v.wasted > 0
         ? `<span class="pill warn">ครบกำหนด 28 วัน · เหลือ ${fmtInt(v.wasted)} ยูนิต</span>`
-        : (v.reason === 'appointment reached'
+        : (v.reason === 'appointment'
             ? `<span class="pill good">ใช้ได้ถึงวันนัด</span>`
             : `<span class="pill good">ใช้ยาหมดขวดพอดี</span>`);
       return `<tr>
